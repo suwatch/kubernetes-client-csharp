@@ -1,11 +1,7 @@
 using System;
-//using System.Reactive.Linq;
-//using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using k8s;
-//using k8s.Models;
-//using Microsoft.Extensions.Logging;
 
 namespace Engineerd.KubeController
 {

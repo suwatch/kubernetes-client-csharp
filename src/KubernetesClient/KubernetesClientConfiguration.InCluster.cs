@@ -6,12 +6,15 @@ namespace k8s
 {
     public partial class KubernetesClientConfiguration
     {
-        private static string ServiceAccountPath =
-            Path.Combine(new string[] {
-                "var", "run", "secrets", "kubernetes.io", "serviceaccount/"
-            });
-        private const string ServiceAccountTokenKeyFileName = "token";
-        private const string ServiceAccountRootCAKeyFileName = "ca.crt";
+        //private static string ServiceAccountPath =
+        //    Path.Combine(new string[] {
+        //        "var", "run", "secrets", "kubernetes.io", "serviceaccount/"
+        //    });
+        //private const string ServiceAccountTokenKeyFileName = "token";
+        //private const string ServiceAccountRootCAKeyFileName = "ca.crt";
+
+        private const string ServiceAccountTokenKeyPath = "/var/run/secrets/kubernetes.io/serviceaccount/token";
+        private const string ServiceAccountRootCAKeyPath = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt";
 
         public static Boolean IsInCluster()
         {
@@ -21,13 +24,17 @@ namespace k8s
             {
                 return false;
             }
-            var tokenPath = Path.Combine(ServiceAccountPath, ServiceAccountTokenKeyFileName);
-            if (!File.Exists(tokenPath))
+
+            //var tokenPath = Path.DirectorySeparatorChar + Path.Combine(ServiceAccountPath, ServiceAccountTokenKeyFileName);
+            //Console.WriteLine($"File.Exists({tokenPath}): {File.Exists(tokenPath)}");
+            if (!File.Exists(ServiceAccountTokenKeyPath))
             {
                 return false;
             }
-            var certPath = Path.Combine(ServiceAccountPath, ServiceAccountRootCAKeyFileName);
-            return File.Exists(certPath);
+
+            //var certPath = Path.DirectorySeparatorChar + Path.Combine(ServiceAccountPath, ServiceAccountRootCAKeyFileName);
+            //Console.WriteLine($"File.Exists({certPath}): {File.Exists(certPath)}");
+            return File.Exists(ServiceAccountRootCAKeyPath);
         }
 
         public static KubernetesClientConfiguration InClusterConfig()
@@ -37,8 +44,10 @@ namespace k8s
                     "unable to load in-cluster configuration, KUBERNETES_SERVICE_HOST and KUBERNETES_SERVICE_PORT must be defined");
             }
 
-            var token = File.ReadAllText(Path.Combine(ServiceAccountPath, ServiceAccountTokenKeyFileName));
-            var rootCAFile = Path.Combine(ServiceAccountPath, ServiceAccountRootCAKeyFileName);
+            //var token = File.ReadAllText(Path.Combine(ServiceAccountPath, ServiceAccountTokenKeyFileName));
+            var token = File.ReadAllText(ServiceAccountTokenKeyPath);
+            //var rootCAFile = Path.Combine(ServiceAccountPath, ServiceAccountRootCAKeyFileName);
+            var rootCAFile = ServiceAccountRootCAKeyPath;
             var host = Environment.GetEnvironmentVariable("KUBERNETES_SERVICE_HOST");
             var port = Environment.GetEnvironmentVariable("KUBERNETES_SERVICE_PORT");
 

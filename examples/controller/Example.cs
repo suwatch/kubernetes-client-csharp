@@ -1,7 +1,4 @@
-using k8s;
-using k8s.Models;
-
-namespace Engineerd.KubeController.Sample
+namespace Engineerd.KubeController
 {
     public class ExampleSpec
     {
