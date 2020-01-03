@@ -9,10 +9,12 @@
     <PackageIconUrl>https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png</PackageIconUrl>
     <PackageTags>kubernetes;docker;containers;</PackageTags>
 
-    <!--TargetFrameworks>netstandard1.4;netstandard2.0;net452;net461;netcoreapp2.2;xamarinios10;monoandroid81</TargetFrameworks-->
+    <!--
     <TargetFrameworks>netstandard1.4;netstandard2.0;net452;net461;netcoreapp2.2</TargetFrameworks>
     <TargetFrameworks Condition="'$(MSBuildRuntimeType)' == 'Core'">netstandard1.4;netstandard2.0;net452;net461;netcoreapp2.2</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netstandard1.4;netstandard2.0;netcoreapp2.2</TargetFrameworks>
+    -->
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>k8s</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>kubernetes-client.snk</AssemblyOriginatorKeyFile>
